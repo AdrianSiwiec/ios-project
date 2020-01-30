@@ -18,6 +18,7 @@
 		84F7C03323E35E5D00E18B37 /* MKPointAnnotation-ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F7C03223E35E5D00E18B37 /* MKPointAnnotation-ObservableObject.swift */; };
 		84F7C03523E35F0200E18B37 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F7C03423E35F0200E18B37 /* EditView.swift */; };
 		84F7C03723E3779300E18B37 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F7C03623E3779300E18B37 /* Result.swift */; };
+		84F7C03923E37DEC00E18B37 /* MKPointAnnotation-Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F7C03823E37DEC00E18B37 /* MKPointAnnotation-Codable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		84F7C03223E35E5D00E18B37 /* MKPointAnnotation-ObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKPointAnnotation-ObservableObject.swift"; sourceTree = "<group>"; };
 		84F7C03423E35F0200E18B37 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		84F7C03623E3779300E18B37 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		84F7C03823E37DEC00E18B37 /* MKPointAnnotation-Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKPointAnnotation-Codable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				8409DBB223E33CCA0082F630 /* AppDelegate.swift */,
 				8409DBB423E33CCA0082F630 /* SceneDelegate.swift */,
 				8409DBB923E33CCA0082F630 /* ContentView.swift */,
+				84F7C03823E37DEC00E18B37 /* MKPointAnnotation-Codable.swift */,
 				84F7C03623E3779300E18B37 /* Result.swift */,
 				8409DBC923E3405A0082F630 /* MapView.swift */,
 				84F7C03223E35E5D00E18B37 /* MKPointAnnotation-ObservableObject.swift */,
@@ -167,6 +170,7 @@
 				8409DBCA23E3405A0082F630 /* MapView.swift in Sources */,
 				84F7C03523E35F0200E18B37 /* EditView.swift in Sources */,
 				8409DBBA23E33CCA0082F630 /* ContentView.swift in Sources */,
+				84F7C03923E37DEC00E18B37 /* MKPointAnnotation-Codable.swift in Sources */,
 				84F7C03723E3779300E18B37 /* Result.swift in Sources */,
 				8409DBB823E33CCA0082F630 /* PlacesToGo.xcdatamodeld in Sources */,
 			);
