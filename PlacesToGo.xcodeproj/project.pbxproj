@@ -60,10 +60,10 @@
 		8409DBB123E33CCA0082F630 /* PlacesToGo */ = {
 			isa = PBXGroup;
 			children = (
-				8409DBC923E3405A0082F630 /* MapView.swift */,
 				8409DBB223E33CCA0082F630 /* AppDelegate.swift */,
 				8409DBB423E33CCA0082F630 /* SceneDelegate.swift */,
 				8409DBB923E33CCA0082F630 /* ContentView.swift */,
+				8409DBC923E3405A0082F630 /* MapView.swift */,
 				8409DBBB23E33CCD0082F630 /* Assets.xcassets */,
 				8409DBC023E33CCD0082F630 /* LaunchScreen.storyboard */,
 				8409DBC323E33CCD0082F630 /* Info.plist */,
