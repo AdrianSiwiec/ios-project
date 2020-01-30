@@ -31,7 +31,7 @@ struct EditView: View {
                     if loadingState == .loaded {
                         List(pages, id: \.pageid) {
                             page in Text(page.title).font(.headline) +
-                                Text(": ") + Text("Description").italic()
+                                Text(": ") + Text(page.description).italic()
                         }
                     } else if loadingState == .loading {
                         Text("Loading...")
@@ -60,7 +60,7 @@ struct EditView: View {
                 let decoder = JSONDecoder()
                 
                 if let items = try? decoder.decode(Result.self, from: data) {
-                    self.pages = Array(items.query.pages.values)
+                    self.pages = Array(items.query.pages.values).sorted()
                     self.loadingState = .loaded
                     return
                 }
@@ -72,7 +72,7 @@ struct EditView: View {
 }
 
 struct EditView_Previews: PreviewProvider {
-    static var previews: some View {
+    static var previews: some View {	
         EditView(placemark: MKPointAnnotation.example)
     }
 }
