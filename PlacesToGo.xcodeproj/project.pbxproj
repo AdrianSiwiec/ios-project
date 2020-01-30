@@ -44,7 +44,6 @@
 		8409DBA623E33CCA0082F630 = {
 			isa = PBXGroup;
 			children = (
-				8409DBC923E3405A0082F630 /* MapView.swift */,
 				8409DBB123E33CCA0082F630 /* PlacesToGo */,
 				8409DBB023E33CCA0082F630 /* Products */,
 			);
@@ -61,6 +60,7 @@
 		8409DBB123E33CCA0082F630 /* PlacesToGo */ = {
 			isa = PBXGroup;
 			children = (
+				8409DBC923E3405A0082F630 /* MapView.swift */,
 				8409DBB223E33CCA0082F630 /* AppDelegate.swift */,
 				8409DBB423E33CCA0082F630 /* SceneDelegate.swift */,
 				8409DBB923E33CCA0082F630 /* ContentView.swift */,
