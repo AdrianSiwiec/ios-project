@@ -18,10 +18,22 @@ struct ContentView: View {
     @State private var showingPlaceDetails = false
     @State private var showingEditScreen = false
     @State private var isUnlocked = true //TODO make false before release
+    let locationManager = CLLocationManager()
+    let myLocationDelegate = MyCLLocationManagerDelegate()
     
     var body: some View {
-        var mapView = MapView(centerCoordinate: $centerCoordinate, shouldUpdate: $shouldUpdateMapViewLocation, selectedPlace: $selectedPlace,
+        let mapView = MapView(centerCoordinate: $centerCoordinate, shouldUpdate: $shouldUpdateMapViewLocation, selectedPlace: $selectedPlace,
         showingPlaceDetails: $showingPlaceDetails, annotations: locations)
+        
+        self.locationManager.delegate = self.myLocationDelegate
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+        
         return ZStack {
             if isUnlocked {
 //                MapView(centerCoordinate: $centerCoordinate, selectedPlace: $selectedPlace,
@@ -34,9 +46,15 @@ struct ContentView: View {
                     HStack{
                         Spacer()
                         Button( action: {
-                            let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(0), longitude: CLLocationDegrees(0))
-                            self.centerCoordinate = coord
-                            self.shouldUpdateMapViewLocation = true
+//                            let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(0), longitude: CLLocationDegrees(0))
+//                            let coord = self.locationManager.location
+//                            
+//                            if coord != nil {
+//                                self.centerCoordinate = coord!.coordinate
+//                                self.shouldUpdateMapViewLocation = true
+//                            } else {
+//                                print("Location coords are nil!")
+//                            }
                             
                             print("Button Pressed")
 
