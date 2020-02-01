@@ -7,12 +7,28 @@
 //
 
 import MapKit
+import SwiftUI
 
 class MyCLLocationManagerDelegate: NSObject, CLLocationManagerDelegate {
+    @Binding var deviceLocation: CLLocationCoordinate2D?
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    override init() {
+        self._deviceLocation = Binding.constant(nil)
+        super.init()
+    }
+    
+    func setBinding(deviceLocation: Binding<CLLocationCoordinate2D?>) {
+        self._deviceLocation = deviceLocation
+    }
+
+    
+    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("Location Updated - this is my own delegate speaking!")
         print(locations)
+        
+        if !locations.isEmpty {
+            self.deviceLocation = locations[0].coordinate
+        }
         
 //        if let location = locations.last{
 //            let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)

@@ -18,12 +18,15 @@ struct ContentView: View {
     @State private var showingPlaceDetails = false
     @State private var showingEditScreen = false
     @State private var isUnlocked = true //TODO make false before release
+    @State private var deviceLocation: CLLocationCoordinate2D?
     let locationManager = CLLocationManager()
-    let myLocationDelegate = MyCLLocationManagerDelegate()
+    var myLocationDelegate = MyCLLocationManagerDelegate()
     
     var body: some View {
         let mapView = MapView(centerCoordinate: $centerCoordinate, shouldUpdate: $shouldUpdateMapViewLocation, selectedPlace: $selectedPlace,
         showingPlaceDetails: $showingPlaceDetails, annotations: locations)
+        
+        self.myLocationDelegate.setBinding(deviceLocation: $deviceLocation)
         
         self.locationManager.delegate = self.myLocationDelegate
         self.locationManager.requestAlwaysAuthorization()
@@ -57,6 +60,14 @@ struct ContentView: View {
 //                            }
                             
                             print("Button Pressed")
+                            print(self.deviceLocation ?? "Unknown location")
+                            
+                            if self.deviceLocation != nil {
+                                self.centerCoordinate = self.deviceLocation!
+                                self.shouldUpdateMapViewLocation = true
+                            } else {
+                                print("Location coords are nil!")
+                            }
 
                         }) {
                             Image(systemName: "location.fill")
