@@ -14,6 +14,8 @@ struct ContentView: View {
     @State private var centerCoordinate = CLLocationCoordinate2D()
     @State private var shouldUpdateMapViewLocation = false
     @State private var locations = [CodableMKPointAnnotation]()
+    @State private var pointsOnLine = [[CLLocationCoordinate2D]]()
+    @State private var shouldCapturePoints = false
     @State private var selectedPlace: MKPointAnnotation?
     @State private var showingPlaceDetails = false
     @State private var showingEditScreen = false
@@ -24,16 +26,17 @@ struct ContentView: View {
     
     var body: some View {
         let mapView = MapView(centerCoordinate: $centerCoordinate, shouldUpdate: $shouldUpdateMapViewLocation, selectedPlace: $selectedPlace,
-        showingPlaceDetails: $showingPlaceDetails, annotations: locations)
+            showingPlaceDetails: $showingPlaceDetails, pointsOnLine: $pointsOnLine,
+            annotations: locations)
         
-        self.myLocationDelegate.setBinding(deviceLocation: $deviceLocation)
+        self.myLocationDelegate.setBinding(deviceLocation: $deviceLocation, pointsOnLine: $pointsOnLine, shouldCapturePoints: $shouldCapturePoints)
         
         self.locationManager.delegate = self.myLocationDelegate
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
 
         if CLLocationManager.locationServicesEnabled() {
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
         }
         
@@ -49,26 +52,12 @@ struct ContentView: View {
                     HStack{
                         Spacer()
                         Button( action: {
-//                            let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(0), longitude: CLLocationDegrees(0))
-//                            let coord = self.locationManager.location
-//                            
-//                            if coord != nil {
-//                                self.centerCoordinate = coord!.coordinate
-//                                self.shouldUpdateMapViewLocation = true
-//                            } else {
-//                                print("Location coords are nil!")
-//                            }
-                            
-                            print("Button Pressed")
-                            print(self.deviceLocation ?? "Unknown location")
-                            
                             if self.deviceLocation != nil {
                                 self.centerCoordinate = self.deviceLocation!
                                 self.shouldUpdateMapViewLocation = true
                             } else {
                                 print("Location coords are nil!")
                             }
-
                         }) {
                             Image(systemName: "location.fill")
                         }.padding()
@@ -101,7 +90,12 @@ struct ContentView: View {
                     }
                     HStack{
                         Spacer()
-                        Button( action: {}) {
+                        Button( action: {
+                            if !self.shouldCapturePoints {
+                                self.pointsOnLine.append([CLLocationCoordinate2D]())
+                            }
+                            self.shouldCapturePoints = true
+                        }) {
                             Image(systemName: "play.fill")
                         }.padding()
                             .background(Color.green.opacity(0.75))
@@ -109,7 +103,9 @@ struct ContentView: View {
                             .font(.title)
                             .clipShape(Circle())
                             .padding(.trailing)
-                        Button( action: {}) {
+                        Button( action: {
+                            self.shouldCapturePoints = false
+                        }) {
                             Image(systemName: "stop.fill")
                         }.padding()
                             .background(Color.red.opacity(0.75))

@@ -14,6 +14,7 @@ struct MapView: UIViewRepresentable {
     @Binding var shouldUpdate: Bool
     @Binding var selectedPlace: MKPointAnnotation?
     @Binding var showingPlaceDetails: Bool
+    @Binding var pointsOnLine: [[CLLocationCoordinate2D]]
     
     var annotations: [MKPointAnnotation]
     
@@ -32,6 +33,11 @@ struct MapView: UIViewRepresentable {
         if shouldUpdate {
             view.setCenter(centerCoordinate, animated: true)
         }
+        
+        pointsOnLine.forEach { (points) in
+            let polyline = MKPolyline(coordinates: points, count: points.count)
+            view.addOverlay(polyline)
+        }
     }
     
     func makeCoordinator() -> Coordinator {
@@ -48,10 +54,6 @@ struct MapView: UIViewRepresentable {
         func mapViewDidChangeVisibleRegion(_ mapView: MKMapView){
             parent.centerCoordinate = mapView.centerCoordinate
             parent.shouldUpdate = false
-        }
-        
-        func mapViewDidStopLocatingUser(_ mapView: MKMapView) {
-            print("AAAAA")
         }
         
     
@@ -78,6 +80,19 @@ struct MapView: UIViewRepresentable {
             parent.selectedPlace = placemark
             parent.showingPlaceDetails = true
         }
+        
+        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+            if overlay.isKind(of: MKPolyline.self) {
+                // draw the track
+                let polyLine = overlay
+                let polyLineRenderer = MKPolylineRenderer(overlay: polyLine)
+                polyLineRenderer.strokeColor = UIColor.red
+                polyLineRenderer.lineWidth = 1.0
+            
+                return polyLineRenderer
+            }
+            return MKPolylineRenderer()
+        }
     }
 }
 
@@ -98,6 +113,7 @@ struct MapView_Previews: PreviewProvider {
                 shouldUpdate: .constant(false),
                 selectedPlace: .constant(MKPointAnnotation.example),
                 showingPlaceDetails: .constant(false),
+                pointsOnLine: .constant([[CLLocationCoordinate2D]]()),
                 annotations: [MKPointAnnotation.example])
     }
 }
