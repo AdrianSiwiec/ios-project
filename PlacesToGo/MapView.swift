@@ -83,7 +83,6 @@ struct MapView: UIViewRepresentable {
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             if overlay.isKind(of: MKPolyline.self) {
-                // draw the track
                 let polyLine = overlay
                 let polyLineRenderer = MKPolylineRenderer(overlay: polyLine)
                 polyLineRenderer.strokeColor = UIColor.red

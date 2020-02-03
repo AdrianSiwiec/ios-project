@@ -27,7 +27,7 @@ struct EditView: View {
                     TextField("Description", text: $placemark.wrappedSubtitle)
                 }
                 
-                Section(header: Text("Nearby...")) {
+                Section(header: Text(NSLocalizedString("Nearby...", comment: ""))) {
                     if loadingState == .loaded {
                         List(pages, id: \.pageid) {
                             page in Text(page.title).font(.headline) +
@@ -40,15 +40,17 @@ struct EditView: View {
                     }
                 }
             }
-        .navigationBarTitle("Edit place")
-            .navigationBarItems(trailing: Button("Done") {
+            .navigationBarTitle(NSLocalizedString(NSLocalizedString("Edit place", comment: ""), comment: ""))
+            .navigationBarItems(trailing: Button(NSLocalizedString("Done", comment: "")) {
                 self.presentationMode.wrappedValue.dismiss()
             }).onAppear(perform: fetchNearbyPlaces)
         }
     }
     
     func fetchNearbyPlaces() {
-        let urlString = "https://en.wikipedia.org/w/api.php?ggscoord=\(placemark.coordinate.latitude)%7C\(placemark.coordinate.longitude)&action=query&prop=coordinates%7Cpageimages%7Cpageterms&colimit=50&piprop=thumbnail&pithumbsize=500&pilimit=50&wbptterms=description&generator=geosearch&ggsradius=10000&ggslimit=50&format=json"
+        let wikipediaUrl = NSLocalizedString("https://en.wikipedia.org", comment: "")
+        
+        let urlString = wikipediaUrl +  "/w/api.php?ggscoord=\(placemark.coordinate.latitude)%7C\(placemark.coordinate.longitude)&action=query&prop=coordinates%7Cpageimages%7Cpageterms&colimit=50&piprop=thumbnail&pithumbsize=500&pilimit=50&wbptterms=description&generator=geosearch&ggsradius=10000&ggslimit=50&format=json"
         
         guard let url = URL(string: urlString) else {
             print("Bad URL: \(urlString)")

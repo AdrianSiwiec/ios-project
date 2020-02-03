@@ -19,7 +19,7 @@ struct ContentView: View {
     @State private var selectedPlace: MKPointAnnotation?
     @State private var showingPlaceDetails = false
     @State private var showingEditScreen = false
-    @State private var isUnlocked = true //TODO make false before release
+    @State private var isUnlocked = true
     @State private var deviceLocation: CLLocationCoordinate2D?
     let locationManager = CLLocationManager()
     var myLocationDelegate = MyCLLocationManagerDelegate()
@@ -42,9 +42,6 @@ struct ContentView: View {
         
         return ZStack {
             if isUnlocked {
-//                MapView(centerCoordinate: $centerCoordinate, selectedPlace: $selectedPlace,
-//                        showingPlaceDetails: $showingPlaceDetails, annotations: locations)
-//                    .edgesIgnoringSafeArea(.all)
                 mapView.edgesIgnoringSafeArea(.all)
                 Circle().fill(Color.blue).opacity(0.3).frame(width:32, height: 32)
                 VStack{
@@ -72,8 +69,8 @@ struct ContentView: View {
                         Spacer()
                         Button(action: {
                             let newLocation = CodableMKPointAnnotation()
-                            newLocation.title = "Default title"
-                            newLocation.subtitle = "Default subtitle"
+                            newLocation.title = NSLocalizedString("Default title", comment: "")
+                            newLocation.subtitle = NSLocalizedString("Default subtitle", comment: "")
                             newLocation.coordinate = self.centerCoordinate
                             self.locations.append(newLocation)
                             
@@ -158,7 +155,6 @@ struct ContentView: View {
     }
     
     func saveData() {
-       
         do {
             let filename = getDocumentsDirectory().appendingPathComponent("SavedPlaces")
             let data = try JSONEncoder().encode(self.locations)
@@ -181,12 +177,12 @@ struct ContentView: View {
                     if success {
                         self.isUnlocked = true
                     } else {
-                        //
+                        print("Failure in authentication!")
                     }
                 }
             }
         } else {
-            // no
+            print("Authentication not supported!")
         }
     }
 }
